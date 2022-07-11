@@ -1,0 +1,6 @@
+config.ini
+*.sqlite3
+approved/
+images/
+rejected/
+.DS_Store
