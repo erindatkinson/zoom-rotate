@@ -1,0 +1,6 @@
+[core]
+ZOOM_IMAGE = /path/to/placeholder/image/uuid
+PIXABAY_API_KEY = api_key_for_pixabay
+PIXABAY_PREFIX=https://pixabay.com/api/
+DB_LOCATION = /path/to/sqlite3/file
+BASE_DIR = /path/to/downloaded/image/dirs
