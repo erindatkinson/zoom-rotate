@@ -4,3 +4,4 @@ approved/
 images/
 rejected/
 .DS_Store
+__pycache__/
