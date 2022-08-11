@@ -48,4 +48,5 @@ if __name__ == '__main__':
     "download": Download,
     "rotate": Rotate,
     "approve": Approve,
+    "reject": Reject
   })
