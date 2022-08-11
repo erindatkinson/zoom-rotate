@@ -3,6 +3,9 @@ from requests import get
 from os.path import splitext, join
 
 def get_imageset(config: dict) -> list:
+  """pulls the api credentials/urls from the config dict given, calls the search endpoint, and returns a list of result
+  objects. Raises Exception if API limit has been hit.
+  """
   search_payload = {
       "q": config["api_query"],
       "per_page": 50,
@@ -23,6 +26,9 @@ def get_imageset(config: dict) -> list:
 
 
 def download_image(config: dict, image:dict):
+  """pulls the base path from the given config, and the api object for an image in pixabay and downloads the
+  high resolution image to the 'images' directory in the base path.
+  """
   download_dir = join(config["base_dir"], "images")
   filetype = splitext(image["largeImageURL"])
   resp = get(image["largeImageURL"], stream=True)
