@@ -91,6 +91,6 @@ pipenv run ./main.py rotate
 if you are going to make an alias for this to run from anywhere you'll want to run it in the style of:
 
 ```shell
-pipenv run /path/to/repo/main.py rotate --config_file /path/to/repo/config.ini
+/path/to/virtualenv/python /path/to/repo/main.py rotate --config_file /path/to/repo/config.ini
 ```
 
