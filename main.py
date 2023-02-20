@@ -41,16 +41,16 @@ def Rotate(config_file="./config.ini") -> None:
   print(f"copying {join(approved_dir, image)} to {config['zoom_image']}")
   copyfile(join(approved_dir, image), config["zoom_image"])
 
-def Approve(selection:tuple, config_file="./config.ini") -> None:
+def Approve(selection=tuple(), all=False, config_file="./config.ini") -> None:
   """Approve takes the comma separated ids given and moves the corresponding files in the images directory into the approved directory and
   marks it as 'approved' in the local database. (Usage: `main.py approve 11234,` or `main.py approve 11234,23455`)
   """
-  mark_pictures(selection, "approve", load_config(config_file))
+  mark_pictures(selection, "approve", load_config(config_file), all)
 
-def Reject(selection:tuple, config_file="./config.ini") -> None:
+def Reject(selection=tuple(), all=False, config_file="./config.ini") -> None:
   """Reject takes the comma separated ids given and deletes the corresponding files in the images directory and
   marks it as 'rejected' in the local database. (Usage: `main.py reject 12345`, or `main.py reject 23456,34567`"""
-  mark_pictures(selection, "reject", load_config(config_file))
+  mark_pictures(selection, "reject", load_config(config_file), all)
 
 
 if __name__ == '__main__':

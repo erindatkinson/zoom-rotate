@@ -1,7 +1,7 @@
 from sqlite3 import Connection, connect
 from os.path import join
 from contextlib import closing
-from os import listdir, remove
+from os import listdir, remove, makedirs
 from os.path import splitext
 from shutil import move
 
@@ -35,22 +35,27 @@ def reject_picture(conn: Connection, img_id: int) -> None:
   conn.cursor().execute("UPDATE pictures set rejected=? WHERE id=?", (True, img_id))
   conn.commit()
 
-def mark_pictures(selection:tuple, action:str, config:dict) -> None:
+def mark_pictures(selection:tuple, action:str, config:dict, all:bool) -> None:
   """Takes a tuple of int ids for image files, and an action (either 'approve' or 'reject') and for each image in the selection
   either moves the corresponding image to the approved directory, or deletes the image. It then updates the db record
   for the image id to match the action.
   """
   pending_dir = join(config["base_dir"], "images")
   approval_dir = join(config["base_dir"], "approved")
-  pending = [i for i in listdir(pending_dir) if i !=".DS_Store"]
+  makedirs(approval_dir, exist_ok=True)
+  pending = list(map(
+    splitext, 
+    [i for i in listdir(pending_dir) if i !=".DS_Store"]))
+  if all:
+    selection = [int(i[0]) for i in pending]
+  selection_ints = [int(i) for i in selection]
 
   with closing(db_conn(config)) as conn:
-    for image in pending:
-      id, ext = splitext(image)
-      if int(id) in selection:
+    for img, ext in pending:
+      if int(img) in selection_ints:
         if action == "reject":
-          remove(join(pending_dir, image))
-          reject_picture(conn, int(id))
-        elif action == "accept":
-          move(join(pending_dir, image), join(approval_dir))
-          approve_picture(conn, int(id))
+          remove(join(pending_dir, f"{img}{ext}"))
+          reject_picture(conn, int(img))
+        elif action == "approve":
+          move(join(pending_dir, f"{img}{ext}"), join(approval_dir, f"{img}{ext}"))
+          approve_picture(conn, int(img))

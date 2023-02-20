@@ -6,3 +6,4 @@ rejected/
 .DS_Store
 __pycache__/
 .vscode/
+*.db
