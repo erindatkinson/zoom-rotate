@@ -8,6 +8,8 @@ verify_ssl = true
 [packages]
 requests = "*"
 fire = "*"
+structlog = "*"
+configparser = "*"
 
 [requires]
 python_version = "3.8"
