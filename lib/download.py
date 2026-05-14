@@ -10,7 +10,7 @@ from .db import db_conn, create, Connection, find_picture, add_picture
 from .logger import Log
 from .pixabay import get_imageset, download_image
 
-def download(config_file="./config.ini") -> None:
+def download(config_file="./config.ini", verify:bool=False) -> None:
     """Download takes the config provided, and gets a random page of the search results 
     from pixabay based on your api query. It then downloads any images in that page that
     have not been previously downloaded."""
@@ -19,7 +19,7 @@ def download(config_file="./config.ini") -> None:
 
     with closing(db_conn(config)) as conn:
         create(conn)
-        imageset = get_imageset(config)
+        imageset = get_imageset(config, verify)
         process_images(conn, config, imageset)
 
 

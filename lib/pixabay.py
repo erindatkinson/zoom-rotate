@@ -10,7 +10,7 @@ from .logger import Log
 class DownloadException(Exception):
     """exception for downloads"""
 
-def get_imageset(config: dict) -> list:
+def get_imageset(config: dict, verify:bool) -> list:
     """pulls the api credentials/urls from the config dict given, calls the search endpoint,
     and returns a list of result objects. Raises Exception if API limit has been hit.
     """
@@ -28,6 +28,7 @@ def get_imageset(config: dict) -> list:
     resp = get(
         config["pixabay_prefix"],
         params=search_payload,
+        verify=verify,
         timeout=int(config['pixabay_timeout']))
     if resp.status_code == 200:
         remaining = dict(resp.headers)["X-RateLimit-Remaining"]
