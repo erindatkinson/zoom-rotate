@@ -5,9 +5,11 @@ from fire import Fire
 # locallib imports
 from lib.download import download
 from lib.rotate import rotate
+from lib.get import get
 
 if __name__ == '__main__':
     Fire({
         "download": download,
-        "rotate": rotate
+        "rotate": rotate,
+        "get": get
     })

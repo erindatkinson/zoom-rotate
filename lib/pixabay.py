@@ -10,6 +10,22 @@ from .logger import Log
 class DownloadException(Exception):
     """exception for downloads"""
 
+def get_image(img_id:str, config:dict, verify:bool)->dict:
+    """pulls deets of a single image"""
+    search_payload = {
+        "key": config["pixabay_api_key"],
+        "id": img_id
+    }
+    resp = get(
+        config["pixabay_prefix"],
+        params=search_payload,
+        verify=verify,
+        timeout=int(config['pixabay_timeout']))
+    if resp.status_code == 200:
+        return resp.json()
+    else:
+        return {}
+
 def get_imageset(config: dict, verify:bool) -> list:
     """pulls the api credentials/urls from the config dict given, calls the search endpoint,
     and returns a list of result objects. Raises Exception if API limit has been hit.
